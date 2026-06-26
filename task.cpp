@@ -198,8 +198,9 @@ void checkReminders() {
             deadline_tm.tm_mon = t.dueMonth - 1;
             deadline_tm.tm_mday = t.dueDay;
             time_t deadline_time = mktime(&deadline_tm);
-              int daysLeft = static_cast<int>( secondsLeft / (24 * 3600));
-            int hoursLeft = static_cast<int>((secondsLeft - daysLeft * 24 * 3600) / 3600);
+            double secondsLeft = difftime(deadline_time, now);
+            int daysLeft =static_cast<int>( secondsLeft / (24 * 3600));
+            int hoursLeft = static_cast<int>((secondsLeft- daysLeft *24* 3600)/3600);
             if (daysLeft <= 2.0) {
                 if (!urgencyFound) {
                     cout << "\n========================================\n";
@@ -208,6 +209,7 @@ void checkReminders() {
                     urgencyFound = true;
                 }
                 cout << "[!] URGENT: '" << t.taskName << "' is due in " << daysLeft << " days!\n";
+                cout << hoursLeft << endl;
             }
         }
     }
